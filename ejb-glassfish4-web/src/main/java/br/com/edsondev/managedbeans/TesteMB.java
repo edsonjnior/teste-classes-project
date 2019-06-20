@@ -1,4 +1,4 @@
-package br.com.edsondev.controllers;
+package br.com.edsondev.managedbeans;
 
 import br.com.edsondev.entities.Curso;
 import br.com.edsondev.enums.Segmento;

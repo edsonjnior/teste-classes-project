@@ -8,6 +8,14 @@ body, html{
 }
 
 .page-wrap{
-    padding: var(--def-padding);
+    margin: auto 200px;
+    padding: var(--def-padding) 0;
+}
+
+.messages{
+    padding-left: 0;
+}
+.messages li{
+    list-style: none;
 }
 

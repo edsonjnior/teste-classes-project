@@ -1,4 +1,4 @@
-package br.com.edsondev.controllers;
+package br.com.edsondev.managedbeans;
 
 import br.com.edsondev.entities.Curso;
 import br.com.edsondev.enums.Segmento;
@@ -13,7 +13,7 @@ import javax.inject.Named;
 
 @Named
 @ViewScoped
-public class SalaMB implements Serializable {
+public class AlunoMB implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,7 @@ public class SalaMB implements Serializable {
 
     private Curso curso;
 
-    public SalaMB() {
+    public AlunoMB() {
     }
 
     @PostConstruct

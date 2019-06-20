@@ -7,7 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -20,60 +20,62 @@ public class Sala implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    @NotBlank(message = "Nome da sala é um campo obrigatório")
+    @NotNull(message = "Nome da sala é um campo obrigatório")
     private String nome;
 
     @NotNull(message = "Lotação máxima é um campo obrigatório")
+    @Min(value = 1, message = "Quantidade não permitida para lotação da sala")
     @Column(name = "lotacao_maxima", nullable = false)
     private int lotacaoMaxima;
 
     public Long getId() {
-        return id;
+	return id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
     public String getNome() {
-        return nome;
+	return nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+	this.nome = nome;
     }
 
     public int getLotacaoMaxima() {
-        return lotacaoMaxima;
+	return lotacaoMaxima;
     }
 
     public void setLotacaoMaxima(int lotacaoMaxima) {
-        this.lotacaoMaxima = lotacaoMaxima;
+	this.lotacaoMaxima = lotacaoMaxima;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+	int hash = 0;
+	hash += (id != null ? id.hashCode() : 0);
+	return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Sala)) {
-            return false;
-        }
-        Sala other = (Sala) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+	// TODO: Warning - this method won't work in the case the id fields are
+	// not set
+	if (!(object instanceof Sala)) {
+	    return false;
+	}
+	Sala other = (Sala) object;
+	if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+	    return false;
+	}
+	return true;
     }
 
     @Override
     public String toString() {
-        return "br.com.edsondev.entities.Sala[ id=" + id + " ]";
+	return "br.com.edsondev.entities.Sala[ id=" + id + " ]";
     }
 
 }

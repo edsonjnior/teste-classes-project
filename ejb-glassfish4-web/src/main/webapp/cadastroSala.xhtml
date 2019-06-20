@@ -2,12 +2,49 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     
     <h:body>
         <ui:composition template="./WEB-INF/template/layout.xhtml">
+            <ui:define name="header"></ui:define>
             
+            <ui:define name="main-content">
+                <h:form prependId="false" id="formCadastroSala" >
+                    <h3 class="mb-3">Cadastro de Salas</h3>
+                    
+                    <div class="form-group">
+                        <label for="nome">Descrição</label>
+                        <h:inputText value="#{salaMB.sala.nome}" 
+                                     class="form-control #{!component.valid ? 'is-invalid' : '' }" 
+                                     id="nome"  />
+                        <div class="invalid-feedback">
+                            <h:message for="nome" />
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="lotacao">Lotação máxima</label>
+                        <h:inputText  value="#{salaMB.sala.lotacaoMaxima}" 
+                                      class="form-control #{!component.valid ? 'is-invalid' : '' }" 
+                                      id="lotacao" >
+                            <f:passThroughAttribute name="type" value="number" />
+                        </h:inputText>
+                        <div class="invalid-feedback">
+                            <h:message for="lotacao" />
+                        </div>
+                    </div>
+                    
+                    <p:commandLink action="#{salaMB.salvarSala}" class="btn btn-primary" value="Salvar"
+                                     process="@form" update="@form" />
+                    <p:commandLink action="salas?faces-redirect=true" class="btn btn-light ml-2" value="Cancelar"
+                                     process="@this" update="@form" />
+                </h:form>
+                
+            </ui:define>
             
+            <ui:define name="footer"></ui:define>
         </ui:composition>
     </h:body>
 </html>
