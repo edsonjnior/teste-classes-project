@@ -1,11 +1,8 @@
 package br.com.edsondev.managedbeans;
 
-import br.com.edsondev.entities.Curso;
-import br.com.edsondev.enums.Segmento;
-import br.com.edsondev.repos.CursoFacade;
+import br.com.edsondev.entities.Aluno;
+import br.com.edsondev.repository.AlunoFacade;
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.faces.view.ViewScoped;
@@ -18,9 +15,9 @@ public class AlunoMB implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @EJB
-    private CursoFacade cursoFacade;
+    private AlunoFacade alunoFacade;
 
-    private Curso curso;
+    private Aluno aluno;
 
     public AlunoMB() {
     }
@@ -29,26 +26,21 @@ public class AlunoMB implements Serializable {
     void init() {
     }
 
-    public int getNumeroDeContatos() {
-//        return contatoFacade.findAll().size();
-        return 0;
+    public void novoAluno() {
+	aluno = new Aluno();
     }
 
-    public List<Segmento> getSegmentos() {
-        return Arrays.asList(Segmento.values());
+    public String salvarAluno() {
+
+	return null;
     }
 
-    public String salvarCurso() {
-
-        return null;
+    public Aluno getAluno() {
+	return aluno;
     }
 
-    public Curso getCurso() {
-        return curso;
-    }
-
-    public void setCurso(Curso curso) {
-        this.curso = curso;
+    public void setAluno(Aluno aluno) {
+	this.aluno = aluno;
     }
 
 }

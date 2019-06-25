@@ -2,10 +2,47 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+
     <h:body>
-        <ui:composition template="./WEB-INF/template/layout.xhtml"></ui:composition>
+        <ui:composition template="./WEB-INF/template/layout.xhtml">
+            <ui:define name="header"></ui:define>
+
+            <ui:define name="main-content">
+                <h:form>
+                    <h3 class="mb-3">Cadastro do Aluno</h3>
+
+                    <p:outputPanel class="card mb-3" >
+                        <div class="card-header">
+                            Dados Pessoais
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="nome">Nome completo</label>
+                                <h:inputText value="#{alunoMB.aluno.nome}" 
+                                             class="form-control #{!component.valid ? 'is-invalid' : '' }" 
+                                             id="nome"  />
+                                <div class="invalid-feedback">
+                                    <h:message for="nome" />
+                                </div>
+                            </div>
+                        </div>
+                    </p:outputPanel>
+                    <p:outputPanel class="card" >
+                        <div class="card-body text-center">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                                <label class="custom-control-label" for="customCheck1">Confirmo que as informções...</label>
+                            </div>
+                        </div>
+                    </p:outputPanel>
+
+                </h:form>
+            </ui:define>
+
+            <ui:define name="footer"></ui:define>
+        </ui:composition>
     </h:body>
 </html>
 

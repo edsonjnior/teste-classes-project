@@ -2,13 +2,352 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-    
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
     <h:body>
         <ui:composition template="./WEB-INF/template/layout.xhtml">
-            
-                
-            
+            <ui:define name="head">
+                <ui:include src="./WEB-INF/template/defaultHead.xhtml" ></ui:include>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+            </ui:define>
+
+
+            <ui:define name="header"></ui:define>
+
+            <ui:define name="main-content">
+                <h:form prependId="false" id="formCadastroTeste_s1">
+                    <h3 class="mb-3">Cadastro de Testes</h3>
+
+                    <p:outputPanel id="panelGeral" class="card mb-3" >
+                        <div class="card-header text-center text-light font-weight-bold bg-secondary">
+                            <h4>Informações gerais</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="titulo">Titulo</label>
+                                <h:inputText value="#{testeMB.teste.titulo}" 
+                                             class="form-control #{!component.valid ? 'is-invalid' : '' }" 
+                                             id="titulo"  />
+                                <div class="invalid-feedback"><h:message for="titulo" /></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <label for="dataEvento">Data</label>
+                                    <h:inputText value="#{testeMB.teste.dataEvento}" 
+                                                 class="form-control inputmask #{!component.valid ? 'is-invalid' : '' }" 
+                                                 id="dataEvento" >
+                                        <f:passThroughAttribute name="data-inputmask-alias" value="datetime" />
+                                        <f:passThroughAttribute name="data-inputmask-inputformat" value="dd/mm/yyyy" />
+                                        <f:passThroughAttribute name="data-inputmask-placeholder" value="dd/mm/aaaa" />
+
+                                        <f:converter converterId="localDateConverter" for="dataEvento" />
+                                    </h:inputText>
+                                    <div class="invalid-feedback"><h:message for="dataEvento" /></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="horaInicioEvento">Início</label>
+                                    <h:inputText value="#{testeMB.teste.dataInicioEvento}" 
+                                                 class="form-control inputmask #{!component.valid ? 'is-invalid' : '' }" 
+                                                 id="horaInicioEvento" >
+                                        <f:passThroughAttribute name="data-inputmask-alias" value="datetime" />
+                                        <f:passThroughAttribute name="data-inputmask-inputformat" value="HH:MM" />
+                                        <f:passThroughAttribute name="data-inputmask-placeholder" value="hh:mm" />
+
+                                        <f:converter converterId="localTimeConverter" for="horaInicioEvento" />
+                                    </h:inputText>
+                                    <div class="invalid-feedback"><h:message for="horaInicioEvento" /></div>
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="horaTerminoEvento">Término</label>
+                                    <h:inputText value="#{testeMB.teste.dataTerminoEvento}" 
+                                                 class="form-control inputmask #{!component.valid ? 'is-invalid' : '' }" 
+                                                 id="horaTerminoEvento" >
+                                        <f:passThroughAttribute name="data-inputmask-alias" value="datetime" />
+                                        <f:passThroughAttribute name="data-inputmask-inputformat" value="HH:MM" />
+                                        <f:passThroughAttribute name="data-inputmask-placeholder" value="hh:mm" />
+
+                                        <f:converter converterId="localTimeConverter" for="horaTerminoEvento" />
+                                    </h:inputText>
+                                    <div class="invalid-feedback"><h:message for="horaTerminoEvento" /></div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="infoEvento">Informações sobre o teste</label>
+                                <h:inputText value="#{testeMB.teste.informacaoEvento}" 
+                                             class="form-control #{!component.valid ? 'is-invalid' : '' }" 
+                                             id="infoEvento"  />
+                                <div class="invalid-feedback"><h:message for="infoEvento" /></div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="segmento">Segmento</label>
+                                    <h:selectOneMenu id="segmento" class="custom-select #{!component.valid ? 'is-invalid' : '' }" 
+                                                     value="#{testeMB.teste.segmento}">
+                                        <f:selectItem itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{testeMB.segmentosTeste}" var="x" itemLabel="#{x.descricao}" itemValue="#{x}" />
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback"><h:message for="segmento" /></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="status">Status</label>
+                                    <h:selectOneMenu id="status" class="custom-select #{!component.valid ? 'is-invalid' : '' }" 
+                                                     value="#{testeMB.teste.status}">
+                                        <f:selectItem itemValue="" noSelectionOption="true" />
+                                        <f:selectItems value="#{testeMB.statusTeste}" var="x" itemLabel="#{x.descricao}" itemValue="#{x}" />
+
+                                        <p:ajax event="change" process="@this" immediate="true" update="@this formCadastroTeste_s2" 
+                                                oncomplete="initCustomFileUpload()"
+                                                />
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback"><h:message for="status" /></div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </p:outputPanel>
+
+                    <p:outputPanel id="panelTextos" class="card mb-3" >
+                        <div class="card-header text-center text-light font-weight-bold bg-secondary">
+                            <h4>Textos extras</h4>
+                        </div>
+                        <div class="card-body">
+                            <p:outputPanel class="form-row">
+                                <div class="form-group col-md-11">
+                                    <h:selectOneMenu id="textos" class="custom-select #{!component.valid ? 'is-invalid' : '' }" 
+                                                     value="#{testeMB.textoExtra}" required="true" requiredMessage="Texto é obrigatório">
+                                        <f:selectItem itemValue="" itemLabel="Selecione o texto na lista" noSelectionOption="true" />
+                                        <f:selectItems value="#{testeMB.textos}"  var="x" itemLabel="#{x.texto}" itemValue="#{x.texto}" />
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback"><h:message for="textos" /></div>
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <h:commandLink id="cmlSalvarTexto" 
+                                                   class="btn btn-block btn-outline-success">
+                                        <i class="fas fa-plus"></i>
+
+                                        <p:ajax process="panelTextos" listener="#{testeMB.adicionarTexto()}"
+                                                update="panelTextos"  />
+                                    </h:commandLink>
+                                </div>
+                            </p:outputPanel>
+                            <div class="form-row">
+                                <ul class="list-group w-100">
+                                    <ui:repeat value="#{testeMB.textosLista()}" rendered="#{not empty testeMB.teste.textos}" var="texto">
+                                        <li class="list-group-item">
+                                            #{texto}
+                                            <p:commandLink id="commandLinkRemoverTexto" class="btn btn-outline-danger float-right"
+                                                           process="@this" update="panelTextos" >
+                                                <i class="fas fa-trash"></i>
+
+                                                <p:collector unique="false" removeFrom="#{testeMB.teste.textos}" value="#{texto}" />
+                                            </p:commandLink>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
+                        </div>
+                    </p:outputPanel>
+
+
+
+                    <p:outputPanel id="panelInscricoes" class="card mb-3" >
+                        <div class="card-header text-center text-light font-weight-bold bg-secondary">
+                            <h4>Inscrições</h4>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="dataInicioIncricao">Início</label>
+                                    <h:inputText value="#{testeMB.teste.dataInicioInscricao}" 
+                                                 class="form-control inputmask #{!component.valid ? 'is-invalid' : '' }" 
+                                                 id="dataInicioIncricao" >
+                                        <f:passThroughAttribute name="data-inputmask-alias" value="datetime" />
+                                        <f:passThroughAttribute name="data-inputmask-inputformat" value="dd/mm/yyyy HH:MM" />
+                                        <f:passThroughAttribute name="data-inputmask-placeholder" value="dd/mm/aaaa hh:mm" />
+
+                                        <f:converter converterId="localDateTimeConverter" for="dataInicioIncricao" />
+                                    </h:inputText>
+                                    <div class="invalid-feedback"><h:message for="dataInicioIncricao" /></div>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="dataTerminoIncricao">Término</label>
+                                    <h:inputText value="#{testeMB.teste.dataTerminoInscricao}" 
+                                                 class="form-control inputmask #{!component.valid ? 'is-invalid' : '' }" 
+                                                 id="dataTerminoIncricao" >
+                                        <f:passThroughAttribute name="data-inputmask-alias" value="datetime" />
+                                        <f:passThroughAttribute name="data-inputmask-inputformat" value="dd/mm/yyyy HH:MM" />
+                                        <f:passThroughAttribute name="data-inputmask-placeholder" value="dd/mm/aaaa hh:mm" />
+
+                                        <f:converter converterId="localDateTimeConverter" for="dataTerminoIncricao" />
+                                    </h:inputText>
+                                    <div class="invalid-feedback"><h:message for="dataTerminoIncricao" /></div>
+                                </div>
+                            </div>
+                        </div>
+                    </p:outputPanel>
+                </h:form>
+
+
+                <h:form prependId="false" id="formCadastroTeste_s2" enctype="multipart/form-data" class="mt-3">
+                    <p:outputPanel class="card mb-3">
+                        <div class="card-header text-center text-light font-weight-bold bg-secondary">
+                            <h4>Roteiros</h4>
+                        </div>
+                        <p:outputPanel id="panelAnexoRoteiro" class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <h:selectOneMenu id="etapaRoteiro" class="custom-select #{!component.valid ? 'is-invalid' : '' }" 
+                                                     value="#{testeMB.etapa}" required="true" requiredMessage="Etapa é obrigatório">
+                                        <f:selectItem itemValue="" itemLabel="Selecione a etapa" noSelectionOption="true" />
+                                        <f:selectItems value="#{testeMB.etapas}" var="x" itemLabel="#{x}" itemValue="#{x}" />
+
+                                        <p:ajax event="change" process="@this" update="anoRoteiro" listener="#{testeMB.carregarAnos()}" />
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback"><h:message for="etapaRoteiro" /></div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <h:selectOneMenu id="anoRoteiro" class="custom-select #{!component.valid ? 'is-invalid' : '' }" 
+                                                     value="#{testeMB.ano}" required="true" requiredMessage="Ano é obrigatório">
+                                        <f:selectItem itemValue="" itemLabel="Selecione o ano" noSelectionOption="true" />
+                                        <f:selectItems value="#{testeMB.anosEtapa}" var="x" itemLabel="#{x}" itemValue="#{x}" />
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback"><h:message for="anoRoteiro" /></div>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <div class="custom-file">
+                                        <h:inputFile class="custom-file-input #{!component.valid ? 'is-invalid' : '' }" 
+                                                     id="arquivoRoteiro" value="#{testeMB.arquivoUpload}" 
+                                                     validator="fileUploadValidator" >
+                                        </h:inputFile>
+                                        <label class="custom-file-label" data-browse="Procurar" for="arquivoRoteiro">Selecionar arquivo</label>
+                                        <div class="invalid-feedback"><h:message for="arquivoRoteiro" /></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <h:commandLink id="cmlSalvarArquivoRoteiro" action="#{testeMB.salvarArquivo('ROTEIRO')}"
+                                                   class="btn btn-block btn-outline-success">
+                                        <i class="fas fa-plus"></i>
+
+                                        <f:ajax execute="formCadastroTeste_s2:panelAnexoRoteiro" 
+                                                render="formCadastroTeste_s2" onevent="initCustomFileUpload"  />
+                                    </h:commandLink>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <ul class="list-group w-100">
+                                    <ui:repeat value="#{testeMB.roteirosTeste}" var="roteiro">
+                                        <li class="list-group-item">
+                                            <i class="fas fa-file-pdf mr-3" ></i> #{roteiro.etapa} - #{roteiro.ano}
+                                            <p:commandLink id="commandLinkRemoverRoteiro" class="btn btn-outline-danger float-right"
+                                                           process="@this" update="panelAnexoRoteiro" oncomplete="initCustomFileUpload">
+                                                <i class="fas fa-trash"></i>
+
+                                                <p:collector unique="false" removeFrom="#{testeMB.teste.arquivos}" value="#{roteiro}" />
+                                            </p:commandLink>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+                    <p:outputPanel class="card mb-3" rendered="#{testeMB.teste.status eq 'CONCLUIDO'}">
+                        <div class="card-header text-center text-light font-weight-bold bg-secondary">
+                            <h4>Resultados</h4>
+                        </div>
+                        <p:outputPanel id="panelAnexoResultado" class="card-body">
+                            <div class="form-row">
+                                <div class="form-group col-md-4">
+                                    <h:selectOneMenu id="etapaResultado" class="custom-select #{!component.valid ? 'is-invalid' : '' }" 
+                                                     value="#{testeMB.etapa}" required="true" requiredMessage="Etapa é obrigatório">
+                                        <f:selectItem itemValue="" itemLabel="Selecione a etapa" noSelectionOption="true" />
+                                        <f:selectItems value="#{testeMB.etapas}" var="x" itemLabel="#{x}" itemValue="#{x}" />
+
+                                        <p:ajax event="change" process="@this" update="anoResultado" listener="#{testeMB.carregarAnos()}" />
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback"><h:message for="etapaResultado" /></div>
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <h:selectOneMenu id="anoResultado" class="custom-select #{!component.valid ? 'is-invalid' : '' }" 
+                                                     value="#{testeMB.ano}" required="true" requiredMessage="Ano é obrigatório">
+                                        <f:selectItem itemValue="" itemLabel="Selecione o ano" noSelectionOption="true" />
+                                        <f:selectItems value="#{testeMB.anosEtapa}" var="x" itemLabel="#{x}" itemValue="#{x}" />
+                                    </h:selectOneMenu>
+                                    <div class="invalid-feedback"><h:message for="anoResultado" /></div>
+                                </div>
+                                <div class="form-group col-md-5">
+                                    <div class="custom-file">
+                                        <h:inputFile class="custom-file-input #{!component.valid ? 'is-invalid' : '' }" 
+                                                     id="arquivoResultado" value="#{testeMB.arquivoUpload}" 
+                                                     validator="fileUploadValidator" >
+                                        </h:inputFile>
+                                        <label class="custom-file-label" data-browse="Procurar" for="arquivoResultado">Selecionar arquivo</label>
+                                        <div class="invalid-feedback"><h:message for="arquivoResultado" /></div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-1">
+                                    <h:commandLink id="cmlSalvarArquivoResultado" action="#{testeMB.salvarArquivo('RESULTADO')}"
+                                                   class="btn btn-block btn-outline-success">
+                                        <i class="fas fa-plus"></i>
+
+                                        <f:ajax execute="formCadastroTeste_s2:panelAnexoResultado" 
+                                                render="formCadastroTeste_s2" onevent="initCustomFileUpload"  />
+                                    </h:commandLink>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <ul class="list-group w-100">
+                                    <ui:repeat value="#{testeMB.resultadosTeste}" var="resultado">
+                                        <li class="list-group-item align-items-center d-flex justify-content-between">
+                                            <i class="fas fa-file-pdf mr-3" ></i> #{resultado.etapa} - #{resultado.ano}
+                                            <p:commandLink id="commandLinkRemoverResultado" class="btn btn-outline-danger float-right"
+                                                           process="@this" update="panelAnexoResultado" oncomplete="initCustomFileUpload">
+                                                <i class="fas fa-trash"></i>
+
+                                                <p:collector unique="false" removeFrom="#{testeMB.teste.arquivos}" value="#{resultado}" />
+                                            </p:commandLink>
+                                        </li>
+                                    </ui:repeat>
+                                </ul>
+                            </div>
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <div class="d-flex">
+                        <h:commandLink action="#{testeMB.salvarTeste()}" class="btn btn-lg btn-block btn-success" value="SALVAR" >
+                            <p:ajax partialSubmit="true" process="@this :panelGeral :panelInscricoes" update=":formCadastroTeste_s1" oncomplete="initComponents()" />
+                        </h:commandLink>
+                    </div>
+                </h:form>
+            </ui:define>
+
+            <ui:define name="footer"></ui:define>
+
+            <ui:define name="scripts">
+                <ui:include src="./WEB-INF/template/defaultFinalScript.xhtml" ></ui:include>
+                <script src="https://cdn.jsdelivr.net/gh/RobinHerbots/jquery.inputmask@5.0.0-beta.87/dist/jquery.inputmask.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/bs-custom-file-input/dist/bs-custom-file-input.min.js"></script>
+
+                <script>
+                    const initInputMasks = function () {
+                        $('.inputmask').inputmask();
+                    };
+
+                    const initCustomFileUpload = function () {
+                        bsCustomFileInput.init();
+                    };
+
+                    const initComponents = function () {
+                        initInputMasks();
+                        initCustomFileUpload();
+                    };
+
+                    $(function () {
+                        initComponents();
+                    });
+                </script>
+            </ui:define>
         </ui:composition>
     </h:body>
 </html>

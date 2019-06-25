@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.edsondev.repos;
+package br.com.edsondev.repository;
 
-import br.com.edsondev.entities.Teste;
+import br.com.edsondev.entities.InformacaoExtra;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author junior
  */
 @Stateless
-public class TesteFacade extends AbstractFacade<Teste> {
+public class InformacaoExtraFacade extends AbstractFacade<InformacaoExtra> {
 
     @PersistenceContext(unitName = "jndiPU")
     private EntityManager em;
@@ -25,8 +25,8 @@ public class TesteFacade extends AbstractFacade<Teste> {
         return em;
     }
 
-    public TesteFacade() {
-        super(Teste.class);
+    public InformacaoExtraFacade() {
+        super(InformacaoExtra.class);
     }
 
 }

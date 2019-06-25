@@ -1,7 +1,7 @@
 package br.com.edsondev.managedbeans;
 
 import br.com.edsondev.entities.Curso;
-import br.com.edsondev.repos.CursoFacade;
+import br.com.edsondev.repository.CursoFacade;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;

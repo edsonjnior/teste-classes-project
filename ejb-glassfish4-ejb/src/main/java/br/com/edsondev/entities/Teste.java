@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package br.com.edsondev.entities;
 
 import br.com.edsondev.enums.Segmento;
@@ -10,19 +5,26 @@ import br.com.edsondev.enums.Status;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -35,9 +37,13 @@ import javax.validation.constraints.NotNull;
 public class Teste implements Serializable {
 
     private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull(message = "Titulo é um campo obrigatório")
+    private String titulo;
 
     @NotNull(message = "Data do evento é um campo obrigatório")
     @Column(name = "data_evento", nullable = false)
@@ -45,11 +51,11 @@ public class Teste implements Serializable {
 
     @NotNull(message = "Data de início do evento é um campo obrigatório")
     @Column(name = "data_inicio_evento", nullable = false)
-    private LocalDateTime dataInicioEvento;
+    private LocalTime dataInicioEvento;
 
     @NotNull(message = "Data de término do evento é um campo obrigatório")
     @Column(name = "data_termino_evento", nullable = false)
-    private LocalDateTime dataTerminoEvento;
+    private LocalTime dataTerminoEvento;
 
     @NotNull(message = "Data de início da inscrição é um campo obrigatório")
     @Column(name = "data_inicio_inscricao", nullable = false)
@@ -67,116 +73,150 @@ public class Teste implements Serializable {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "teste")
+    private List<Arquivo> arquivos = new ArrayList<>();
+
     @ElementCollection
-    @CollectionTable(name = "teste_roteiro", joinColumns = @JoinColumn(name = "teste_id", referencedColumnName = "id"))
-    private Set<String> roteiros = new HashSet<>();
-    @ElementCollection
-    @CollectionTable(name = "teste_resultado", joinColumns = @JoinColumn(name = "teste_id", referencedColumnName = "id"))
-    private Set<String> resultados = new HashSet<>();
+    @Column(name = "texto")
+    @CollectionTable(name = "teste_texto", joinColumns = @JoinColumn(name = "teste_id", referencedColumnName = "id"))
+    private Set<String> textos = new HashSet<>();
+
+    @NotNull(message = "Inclua alguma informação sobre o evento")
+    @Column(name = "info_evento", nullable = false)
+    private String informacaoEvento;
+
+    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Aluno.class)
+    @JoinTable(name = "aluno_teste", joinColumns = @JoinColumn(name = "teste_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "aluno_id", referencedColumnName = "id"))
+    private List<Aluno> alunos;
 
     public Long getId() {
-        return id;
+	return id;
     }
 
     public void setId(Long id) {
-        this.id = id;
+	this.id = id;
     }
 
     public LocalDate getDataEvento() {
-        return dataEvento;
+	return dataEvento;
     }
 
     public void setDataEvento(LocalDate dataEvento) {
-        this.dataEvento = dataEvento;
+	this.dataEvento = dataEvento;
     }
 
-    public LocalDateTime getDataInicioEvento() {
-        return dataInicioEvento;
+    public LocalTime getDataInicioEvento() {
+	return dataInicioEvento;
     }
 
-    public void setDataInicioEvento(LocalDateTime dataInicioEvento) {
-        this.dataInicioEvento = dataInicioEvento;
+    public void setDataInicioEvento(LocalTime dataInicioEvento) {
+	this.dataInicioEvento = dataInicioEvento;
     }
 
-    public LocalDateTime getDataTerminoEvento() {
-        return dataTerminoEvento;
+    public LocalTime getDataTerminoEvento() {
+	return dataTerminoEvento;
     }
 
-    public void setDataTerminoEvento(LocalDateTime dataTerminoEvento) {
-        this.dataTerminoEvento = dataTerminoEvento;
+    public void setDataTerminoEvento(LocalTime dataTerminoEvento) {
+	this.dataTerminoEvento = dataTerminoEvento;
     }
 
     public LocalDateTime getDataInicioInscricao() {
-        return dataInicioInscricao;
+	return dataInicioInscricao;
     }
 
     public void setDataInicioInscricao(LocalDateTime dataInicioInscricao) {
-        this.dataInicioInscricao = dataInicioInscricao;
+	this.dataInicioInscricao = dataInicioInscricao;
     }
 
     public LocalDateTime getDataTerminoInscricao() {
-        return dataTerminoInscricao;
+	return dataTerminoInscricao;
     }
 
     public void setDataTerminoInscricao(LocalDateTime dataTerminoInscricao) {
-        this.dataTerminoInscricao = dataTerminoInscricao;
+	this.dataTerminoInscricao = dataTerminoInscricao;
     }
 
     public Segmento getSegmento() {
-        return segmento;
+	return segmento;
     }
 
     public void setSegmento(Segmento segmento) {
-        this.segmento = segmento;
+	this.segmento = segmento;
     }
 
     public Status getStatus() {
-        return status;
+	return status;
     }
 
     public void setStatus(Status status) {
-        this.status = status;
+	this.status = status;
     }
 
-    public Set<String> getRoteiros() {
-        return roteiros;
+    public String getInformacaoEvento() {
+	return informacaoEvento;
     }
 
-    public void setRoteiros(Set<String> roteiros) {
-        this.roteiros = roteiros;
+    public void setInformacaoEvento(String informacaoEvento) {
+	this.informacaoEvento = informacaoEvento;
     }
 
-    public Set<String> getResultados() {
-        return resultados;
+    public List<Arquivo> getArquivos() {
+	return arquivos;
     }
 
-    public void setResultados(Set<String> resultados) {
-        this.resultados = resultados;
+    public void setArquivos(List<Arquivo> arquivos) {
+	this.arquivos = arquivos;
+    }
+
+    public Set<String> getTextos() {
+	return textos;
+    }
+
+    public void setTextos(Set<String> textos) {
+	this.textos = textos;
+    }
+
+    public String getTitulo() {
+	return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+	this.titulo = titulo;
+    }
+
+    public List<Aluno> getAlunos() {
+	return alunos;
+    }
+
+    public void setAlunos(List<Aluno> alunos) {
+	this.alunos = alunos;
     }
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
+	int hash = 0;
+	hash += (id != null ? id.hashCode() : 0);
+	return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Teste)) {
-            return false;
-        }
-        Teste other = (Teste) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
+	// TODO: Warning - this method won't work in the case the id fields are
+	// not set
+	if (!(object instanceof Teste)) {
+	    return false;
+	}
+	Teste other = (Teste) object;
+	if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+	    return false;
+	}
+	return true;
     }
 
     @Override
     public String toString() {
-        return "br.com.edsondev.entities.Teste[ id=" + id + " ]";
+	return "br.com.edsondev.entities.Teste[ id=" + id + " ]";
     }
 
 }

@@ -5,3 +5,4 @@ target
 lib
 
 nb-configuration.xml
+s3.properties

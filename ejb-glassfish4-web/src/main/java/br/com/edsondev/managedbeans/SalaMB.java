@@ -1,7 +1,7 @@
 package br.com.edsondev.managedbeans;
 
 import br.com.edsondev.entities.Sala;
-import br.com.edsondev.repos.SalaFacade;
+import br.com.edsondev.repository.SalaFacade;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
@@ -29,10 +29,6 @@ public class SalaMB implements Serializable {
     private String salaId;
     private Sala sala;
 
-    public void novoSala() {
-	sala = new Sala();
-    }
-
     public SalaMB() {
 	novoSala();
 
@@ -50,6 +46,10 @@ public class SalaMB implements Serializable {
 	if (salaId != null && !"".equals(salaId)) {
 	    sala = salaFacade.find(new Long(salaId));
 	}
+    }
+
+    public void novoSala() {
+	sala = new Sala();
     }
 
     public String salvarSala() {

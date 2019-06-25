@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:body>
+        <ui:composition template="./WEB-INF/template/layout.xhtml">
+            <ui:define name="header"></ui:define>
+
+            <ui:define name="main-content">
+                <h:form id="formTextos">
+                    <h3 class="mb-3">Textos pré-definidos</h3>
+
+                    <div class="alert alert-#{textosMB.messageSeverity} alert-dismissible fade show " role="alert" 
+                         jsf:rendered="#{not empty facesContext.messageList}">
+                        <h:messages id="messages" class="messages" />
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fas fa-times fa-xs" />
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-sm-10"></div>
+                            <div class="col-sm-2">
+                                <p:commandLink class="btn btn-success btn-block" action="cadastroTextos" >
+                                    Novo
+                                </p:commandLink>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p:dataTable value="#{textosMB.textos}" var="texto" emptyMessage="Nenhum texto encontrado">
+                        <p:column headerText="Descrição">
+                            #{texto.texto}
+                        </p:column>
+                        <p:column headerText="" class="text-center">
+                            <p:commandLink
+                                ajax="false" class="btn btn-outline-primary" action="cadastroTextos"
+                                value="Editar">
+                                <f:param name="textoId" value="#{texto.id}" />
+                            </p:commandLink>
+                            <p:commandLink process="@this" update=":formModalExclusao"
+                                           class="btn btn-outline-danger ml-2"
+                                           value="Remover" >
+                                <f:setPropertyActionListener target="#{textosMB.texto}" value="#{texto}" />
+                                <f:passThroughAttribute name="data-toggle" value="modal" />
+                                <f:passThroughAttribute name="data-target" value="#exclusaoTextoModal" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exclusaoTextoModal" tabindex="-1"
+                     role="dialog" aria-labelledby="textoModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="textoModalLabel">Confirme sua solicitação</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">
+                                        <i class="fas fa-times fa-xs" />
+                                    </span>
+                                </button>
+                            </div>
+                            <h:form id="formModalExclusao" >
+                                <div class="modal-body">
+                                    Deseja realmente remover o texto selecionado?
+                                </div>
+
+                                <div class="modal-footer">
+                                    <p:commandLink process="@this" class="btn btn-outline-danger pl-3 pr-3"
+                                                   actionListener="#{textosMB.excluirTexto()}"
+                                                   update="formTextos"> Excluir
+
+                                        <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                    </p:commandLink>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+            <ui:define name="footer"></ui:define>
+        </ui:composition>
+    </h:body>
+</html>

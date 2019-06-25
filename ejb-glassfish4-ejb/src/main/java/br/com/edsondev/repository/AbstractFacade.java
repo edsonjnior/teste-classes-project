@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package br.com.edsondev.repos;
+package br.com.edsondev.repository;
 
 import java.util.List;
 import javax.persistence.EntityManager;
