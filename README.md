@@ -13,7 +13,7 @@ Hibernate 4.3 (JPA 2.1), JEE Web 7, Mysql 5, Glassfish 4, Primefaces 7, JSF 2.2,
 ### JDBC Connection Pool
 - Pool name: mydbPool 
   - Resource type: javax.sql.DataSource
-  - Addicional Properties:
+  - Additional Properties:
     - databaseName: classes_db
     - serverName: localhost
     - portNumber: 3306
