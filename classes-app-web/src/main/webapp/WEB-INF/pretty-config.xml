@@ -1,0 +1,74 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+
+    <rewrite match="(?i)^(.*);jsessionid=\w+(.*)" substitute="$1$2" redirect="chain" />             
+    
+    <!--Eventos-->
+    <url-mapping id="eventos">
+        <pattern value="/" />
+        <view-id value="/index.xhtml" />
+    </url-mapping>
+    
+    
+    <!--Testes-->
+    <url-mapping id="cadastro-teste">
+        <pattern value="/admin/testes/cadastro" />
+        <view-id value="/cadastroTeste.xhtml" />
+    </url-mapping>
+    <url-mapping id="testes">
+        <pattern value="/admin/testes" />
+        <view-id value="/testes.xhtml" />
+    </url-mapping>
+    
+    <!--Salas-->
+    <url-mapping id="cadastro-sala">
+        <pattern value="/admin/salas/cadastro" />
+        <view-id value="/cadastroSala.xhtml" />
+    </url-mapping>
+    <url-mapping id="salas">
+        <pattern value="/admin/salas" />
+        <view-id value="/salas.xhtml" />
+    </url-mapping>
+    
+    <!--Cursos-->
+    <url-mapping id="cadastro-curso">
+        <pattern value="/admin/cursos/cadastro" />
+        <view-id value="/cadastroCurso.xhtml" />
+    </url-mapping>
+    <url-mapping id="cursos">
+        <pattern value="/admin/cursos" />
+        <view-id value="/cursos.xhtml" />
+    </url-mapping>
+    
+    <!--Textos-->
+    <url-mapping id="cadastro-texto">
+        <pattern value="/admin/textos/cadastro" />
+        <view-id value="/cadastroTextos.xhtml" />
+    </url-mapping>
+    <url-mapping id="cursos">
+        <pattern value="/admin/textos" />
+        <view-id value="/textos.xhtml" />
+    </url-mapping>
+    
+    <!--Alunos-->
+    <url-mapping id="inscricao-aluno">
+        <pattern value="/inscricoes/identificacao/#{testeid}" />
+        <view-id value="/cadastroTextos.xhtml" />
+    </url-mapping>
+    <url-mapping id="cadastro-aluno">
+        <pattern value="/inscricao/textos/cadastro" />
+        <view-id value="/cadastroTextos.xhtml" />
+    </url-mapping>
+    
+    <!--Login-->
+    <url-mapping id="login-aluno">
+        <pattern value="/inscricoes/identificacao" />
+        <view-id value="/loginAluno.xhtml" />
+    </url-mapping>
+    
+    
+    
+   
+</pretty-config>

@@ -1,0 +1,59 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
+
+    <h:body>
+        <ui:composition template="./WEB-INF/template/layout.xhtml">
+            <ui:define name="header"></ui:define>
+
+            <ui:define name="main-content">
+                <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                    <div class="card border-light w-50">
+                        <div class="card-body">
+                            <h5 class="card-title text-center" style="margin-bottom: 30px">
+                                Redefinição de senha
+                            </h5>
+                            <h6 class="card-subtitle mb-3 text-muted">Por favor entre com seu email de cadastro para que seja enviado as instruções de redefinição de senha.</h6>
+                            <h:form prependId="false" id="formEsqueciSenha">
+                                <div class="alert alert-#{loginMB.messageSeverity} alert-dismissible fade show " role="alert" jsf:rendered="#{not empty facesContext.messageList}">
+                                    <h:messages id="messages" class="messages" />
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                        <span aria-hidden="true">
+                                            <i class="fas fa-times fa-xs" />
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <label for="emailEsqueci">Seu email de cadastro</label>
+                                    <h:inputText id="emailEsqueci" value="#{loginMB.emailRecuperacao}" class="form-control  #{!component.valid ? 'is-invalid' : '' }" 
+                                                 required="true" 
+                                                 validator="emailValidator"
+                                                 requiredMessage="Email de cadastro é obrigatório">
+                                        <f:passThroughAttribute name="placeholder" value="Email de cadastro" />
+                                    </h:inputText>
+                                </div>
+                                <div class="form-group">
+                                    <h:commandLink class="btn btn-lg btn-block btn-success" value="Continuar" actionListener="#{loginMB.lembrarSenha('emailEsqueci')}">
+                                        <p:ajax process="@this formEsqueciSenha" update="formEsqueciSenha" />
+                                    </h:commandLink>
+                                </div>
+                                <div class="form-group text-center">
+                                    <h:link class="text-muted" outcome="pretty:login-aluno" >Fazer login</h:link>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+
+            <ui:define name="footer"></ui:define>
+        </ui:composition>
+    </h:body>
+</html>

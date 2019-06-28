@@ -1,0 +1,28 @@
+:root{
+    --def-padding: 15px;
+}
+
+
+body, html{
+    height: 100%;
+}
+
+.page-wrap{
+    margin: auto 200px;
+    padding: var(--def-padding) 0;
+}
+
+@media only screen and (max-width: 960px ){
+    .page-wrap{
+        margin: auto 50px;
+    }
+}
+
+.messages{
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.messages li{
+    list-style: none;
+}
+

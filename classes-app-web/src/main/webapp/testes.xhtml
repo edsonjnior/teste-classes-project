@@ -1,0 +1,99 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+
+    xmlns:jsf="http://xmlns.jcp.org/jsf">
+    <h:body>
+        <ui:composition template="./WEB-INF/template/layout.xhtml">
+            <ui:define name="header"></ui:define>
+
+            <ui:define name="main-content">
+                <h:form id="formSalas">
+                    <h3 class="mb-3">Salas</h3>
+
+                    <div class="alert alert-#{salaMB.messageSeverity} alert-dismissible fade show " role="alert" 
+                         jsf:rendered="#{not empty facesContext.messageList}">
+                        <h:messages id="messages" class="messages" />
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">
+                                <i class="fas fa-times fa-xs" />
+                            </span>
+                        </button>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="row">
+                            <div class="col-sm-10"></div>
+                            <div class="col-sm-2">
+                                <p:commandLink class="btn btn-success btn-block" action="cadastroSala" >
+                                    Novo
+                                </p:commandLink>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p:dataTable value="#{salaMB.salas}" var="sala" emptyMessage="Nenhuma sala encontrada">
+                        <p:column headerText="Nome">
+                            #{sala.nome}
+                        </p:column>
+                        <p:column headerText="Lot. Máxima" class="text-center">
+                            #{sala.lotacaoMaxima}
+                        </p:column>
+                        <p:column headerText="" class="text-center">
+                            <p:commandLink
+                                ajax="false" class="btn btn-outline-primary" action="cadastroSala"
+                                value="Editar">
+                                <f:param name="salaId" value="#{sala.id}" />
+                            </p:commandLink>
+                            <p:commandLink process="@this" update=":formModalExclusao"
+                                           class="btn btn-outline-danger ml-2"
+                                           value="Remover" >
+                                <f:setPropertyActionListener target="#{salaMB.sala}" value="#{sala}" />
+                                <f:passThroughAttribute name="data-toggle" value="modal" />
+                                <f:passThroughAttribute name="data-target" value="#exclusaoSalaModal" />
+                            </p:commandLink>
+                        </p:column>
+                    </p:dataTable>
+                </h:form>
+
+                <!-- Modal -->
+                <div class="modal fade" id="exclusaoSalaModal" tabindex="-1"
+                     role="dialog" aria-labelledby="salaModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="salaModalLabel">Confirme sua solicitação</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">
+                                        <i class="fas fa-times fa-xs" />
+                                    </span>
+                                </button>
+                            </div>
+                            <h:form id="formModalExclusao" >
+                                <div class="modal-body">
+                                    Deseja realmente remover a sala <span class="font-weight-bold">#{salaMB.sala.nome}</span>?
+                                </div>
+
+                                <div class="modal-footer">
+                                    <p:commandLink process="@this" class="btn btn-outline-danger pl-3 pr-3"
+                                                   actionListener="#{salaMB.excluirSala}"
+                                                   update="formSalas"> Excluir
+
+                                        <f:passThroughAttribute name="data-dismiss" value="modal" />
+                                    </p:commandLink>
+                                </div>
+                            </h:form>
+                        </div>
+                    </div>
+                </div>
+            </ui:define>
+
+            <ui:define name="footer"></ui:define>
+        </ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,126 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html>
+<html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://xmlns.jcp.org/jsf/html"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+    <h:body>
+        <ui:composition template="./WEB-INF/template/layout.xhtml">
+            <ui:define name="header"></ui:define>
+
+            <ui:define name="main-content">
+                <div class="container">
+                    <h1 class=" text-center">Identificação</h1>
+                </div>
+                <div class="alert alert-danger mt-3 mb-3" role="alert">
+                    <span class="font-weight-bold">Atenção:</span> Para inscrição de dois ou mais alunos, deve ser utilizado um email diferente para cada inscrição.
+                </div>
+                <div class="card-deck mt-3">
+                    <h:form id="formLoginAluno" prependId="false" class="card border-white ">
+                        <div class="card-body">
+                            <h2 class="card-title text-info">Já tem cadastro?</h2>
+                            <h6 class="card-subtitle mb-3 text-muted">Acesse com e-mail e senha.</h6>
+                            <div class="form-group">
+                                <label for="emailLogin">Email</label>
+                                <h:inputText id="emailLogin" class="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Digite seu email" />
+                                </h:inputText>
+                            </div>
+                            <div class="form-group">
+                                <label for="senhaLogin">Senha</label>
+                                <h:inputSecret id="senhaLogin" class="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Digite sua senha" />
+                                </h:inputSecret>
+                            </div>
+                            <div class="form-group">
+                                <h:commandLink class="btn btn-lg btn-info font-weight-light">
+                                    Entrar
+                                </h:commandLink>
+                            </div>
+                            <div class="d-flex justify-content-start mt-3">
+                                <h:commandLink class="text-decoration-none" action="redefinirSenha?faces-redirect=true">
+                                    <i class="fas fa-question-circle fa-xs"></i> Esqueceu sua senha?
+                                    
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </h:form>
+
+                    <div class="d-flex align-items-center border-right" ></div>
+
+                    <h:form id="formRegistroAluno" prependId="false" class="card border-white">
+                        <div class="card-body">
+                            <h2 class="card-title text-info">Não tem cadastro?</h2>
+                            <h6 class="card-subtitle mb-3 text-muted">Se ainda não se inscreveu ou vai inscrever outro aluno.</h6>
+                            <div class="form-group">
+                                <label for="emailRegistro">Email</label>
+                                <h:inputText id="emailRegistro" class="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Digite seu email" />
+                                </h:inputText>
+                            </div>
+                            <div class="form-group">
+                                <label for="senhaRegistro">Senha para cadastro</label>
+                                <h:inputSecret id="senhaRegistro" class="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Digite sua senha" />
+                                    <f:passThroughAttribute name="aria-describedby" value="senhaRegistroHelp" />
+                                </h:inputSecret>
+                                <small id="senhaRegistroHelp" class="form-text text-muted">
+                                    Sua senha deve conter de 8-20 caracteres, conter letras e números, e não deve conter espaços, caracteres especiais ou emojis.
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="senha2Registro">Confirmação de senha</label>
+                                <h:inputSecret id="senha2Registro" class="form-control">
+                                    <f:passThroughAttribute name="placeholder" value="Confirme sua senha" />
+                                </h:inputSecret>
+                            </div>
+                            <div class="form-group">
+                                <h:commandLink class="btn btn-lg btn-info font-weight-light">
+                                    Registrar
+                                </h:commandLink>
+                            </div>
+                        </div>
+                    </h:form>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalEsqueciSenha" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header border-bottom-0">
+                                <h5 class="modal-title" id="exampleModalCenterTitle">Esqueceu a senha?</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true"><i class="fas fa-times fa-xs" /></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <h:form prependId="false" id="formEsqueciSenha">
+                                    <div class="form-group">
+                                        Por favor entre com seu email de cadastro para que seja enviada uma nova senha.
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="emailEsqueci">Seu email de cadastro</label>
+                                        <h:inputText id="emailEsqueci" class="form-control  #{!component.valid ? 'is-invalid' : '' }" required="true" requiredMessage="Email de cadastro é obrigatório">
+                                            <f:passThroughAttribute name="placeholder" value="Email de cadastro" />
+                                        </h:inputText>
+                                        <div class="invalid-feedback"><h:message for="emailEsqueci" /></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:commandLink class="btn btn-lg btn-block btn-success" value="Continuar" actionListener="#{loginMB.lembrarSenha('emailEsqueci')}">
+                                            <p:ajax process="@this formEsqueciSenha" update="formEsqueciSenha" />
+                                        </h:commandLink>
+                                    </div>
+                                </h:form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </ui:define>
+
+            <ui:define name="footer"></ui:define>
+        </ui:composition>
+    </h:body>
+</html>
