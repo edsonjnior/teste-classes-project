@@ -19,7 +19,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <pretty-faces.version>3.4.1.final</pretty-faces.version>
-        <amazonaws.version>1.11.179</amazonaws.version>
+        <amazonaws.version>1.12.261</amazonaws.version>
         <primefaces.version>7.0</primefaces.version>
     </properties>
     
