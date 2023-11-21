@@ -20,7 +20,7 @@
 
         <pretty-faces.version>3.4.1.final</pretty-faces.version>
         <amazonaws.version>1.11.179</amazonaws.version>
-        <primefaces.version>7.0</primefaces.version>
+        <primefaces.version>8.0</primefaces.version>
     </properties>
     
     <dependencies>
